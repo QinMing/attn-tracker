@@ -93,7 +93,7 @@ export default class CameraScreen extends React.Component<{}, State> {
     ratio: '16:9',
     ratios: [],
     barcodeScanning: false,
-    faceDetecting: false,
+    faceDetecting: true,
     faces: [],
     newPhotos: false,
     permissionsGranted: false,
