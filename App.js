@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import CameraPage from "./camera_page";
+import CameraScreen from "./CameraScreen";
 
 export default class App extends Component {
   render() {
     return (
-      <CameraPage />
+      <CameraScreen />
     );
   }
 }

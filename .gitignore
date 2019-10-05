@@ -57,3 +57,5 @@ buck-out/
 
 android
 ios
+.expo
+.expo-shared

@@ -3,7 +3,7 @@
   "displayName": "for hackathon",
   "expo": {
     "name": "attracker",
-    "slug": "expo-template-bare",
+    "slug": "attracker",
     "privacy": "unlisted",
     "sdkVersion": "35.0.0",
     "version": "1.0.0",
@@ -12,6 +12,8 @@
       "ios",
       "android",
       "web"
-    ]
+    ],
+    "description": "",
+    "githubUrl": "https://github.com/QinMing/attn-tracker"
   }
 }

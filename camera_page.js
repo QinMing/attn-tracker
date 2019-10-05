@@ -37,14 +37,9 @@ export default class CameraPage extends React.Component {
                   alignItems: 'center',
                 }}
                 onPress={() => {
-                  this.setState({
-                    type:
-                      this.state.type === Camera.Constants.Type.back
-                        ? Camera.Constants.Type.front
-                        : Camera.Constants.Type.back,
-                  });
+                  console.log("here")
                 }}>
-                <Text style={{fontSize: 18, marginBottom: 10, color: 'white'}}> Flip </Text>
+                <Text style={{fontSize: 18, marginBottom: 10, color: 'white'}}>button</Text>
               </TouchableOpacity>
             </View>
           </Camera>
