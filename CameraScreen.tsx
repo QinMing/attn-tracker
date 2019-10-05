@@ -331,6 +331,9 @@ export default class CameraScreen extends React.Component<{}, State> {
         onFacesDetected={this.state.faceDetecting ? this.onFacesDetected : undefined}
         faceDetectorSettings={{
           tracking: true,
+          mode: FaceDetector.Constants.Mode.accurate,
+          detectLandmarks: FaceDetector.Constants.Landmarks.none,
+          runClassifications: FaceDetector.Constants.Classifications.all,
         }}
         barCodeScannerSettings={{
           barCodeTypes: [

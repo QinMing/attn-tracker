@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaceFeature } from 'expo-face-detector';
 import { View, Text, StyleSheet } from 'react-native';
+import { attentionScore } from "./Overlay";
 
 const landmarkSize = 2;
 
@@ -9,6 +10,8 @@ export const scaledFace = (scale: number) => ({
   bounds,
   rollAngle,
   yawAngle,
+  leftEyeOpenProbability,
+  rightEyeOpenProbability,
 }: FaceFeature) => (
   <View
     key={faceID}
@@ -26,9 +29,11 @@ export const scaledFace = (scale: number) => ({
         ],
       },
     ]}>
-    <Text style={styles.faceText}>ID: {faceID}</Text>
-    <Text style={styles.faceText}>rollAngle: {rollAngle!.toFixed(0)}</Text>
-    <Text style={styles.faceText}>yawAngle: {yawAngle!.toFixed(0)}</Text>
+    <Text style={styles.faceText}>score {attentionScore(rollAngle, yawAngle, leftEyeOpenProbability, rightEyeOpenProbability)}</Text>
+    {/*<Text style={styles.faceText}>rollAngle: {rollAngle!.toFixed(0)}</Text>*/}
+    {/*<Text style={styles.faceText}>yawAngle: {yawAngle!.toFixed(0)}</Text>*/}
+    <Text style={styles.faceText}>l: {leftEyeOpenProbability!.toFixed(2)}</Text>
+    <Text style={styles.faceText}>r: {rightEyeOpenProbability!.toFixed(2)}</Text>
   </View>
 );
 
