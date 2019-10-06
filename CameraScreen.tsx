@@ -110,13 +110,13 @@ export default class CameraScreen extends React.Component<{}, State> {
     if (Platform.OS === 'web') {
       return;
     }
-    try {
-      FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'photos').catch(e => {
-        // tslint:disable-next-line no-console
-        console.log(e, 'Directory exists');
-      });
-    } catch (error) {}
-
+    // try {
+    //   FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'photos').catch(e => {
+    //     // tslint:disable-next-line no-console
+    //     console.log(e, 'Directory exists');
+    //   });
+    // } catch (error) {}
+    console.log("periodic job registered")
     setInterval(this.takePicture, 1000); // every second sends photo to Watson
   }
 
@@ -150,8 +150,8 @@ export default class CameraScreen extends React.Component<{}, State> {
     if (this.camera) {
       this.camera.takePictureAsync({
         onPictureSaved: this.onPictureSaved,
-        quality: 0.5,
-        base64: true
+        quality: 0.1,
+        // base64: true
       });
     }
   };
@@ -163,24 +163,31 @@ export default class CameraScreen extends React.Component<{}, State> {
     const data = new FormData();
     data.append("features", "objects");
     data.append("collection_ids", "38b0b6a1-af53-47d4-890c-69d726de6d6e");
-    data.append("images_file", photo.uri);
+    data.append("images_file", {
+      uri: photo.uri,
+      type: 'image/jpg'
+    });
+    console.log("taking picture ..");
 
     fetch(
-      'https://apikey:gjgAfvwP7ykuNvgIqcKvHdCTrEzmKi0sh5MRxvY2hvjj@gateway.watsonplatform.net/visual-recognition/api/v4/analyze?version=2019-02-11',
-      {
-        method: 'POST',
-        // headers: {
-        //   Accept: 'application/json',
-        //   // 'Content-Type': 'multipart/form-data',
-        // },
-        body: data,
-      }
-    ).then(response => response.json())
+      'https://gateway.watsonplatform.net/visual-recognition/api/v4/analyze?version=2019-02-11',{
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Basic YXBpa2V5OmdqZ0FmdndQN3lrdU52Z0lxY0t2SGRDVHJFem1LaTBzaDVNUnh2WTJodmpq',
+        // apikey:gjgAfvwP7ykuNvgIqcKvHdCTrEzmKi0sh5MRxvY2hvjj
+      },
+      body: data,
+    }).then(response => {
+      // console.log(response.text());
+      return response.text()
+    })
     .then(responseJson => {
-      console.log(1)
-      console.log(responseJson)
+      console.log(responseJson);
     })
     .catch(error => {
+      console.log("Got error");
       console.error(error);
     });
     // if (Platform.OS === 'web') {
