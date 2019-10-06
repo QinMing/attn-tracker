@@ -18,6 +18,9 @@ import {
 import GalleryScreen from './GalleryScreen';
 import { face, landmarks } from './Face';
 
+import { scoredIcon } from './ScoreIcon';
+
+
 interface Picture {
   width: number;
   height: number;
