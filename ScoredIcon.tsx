@@ -2,17 +2,27 @@ import gauge_25 from "./Gauge_25.png"
 import gauge_50 from "./Gauge_50.png"
 import gauge_75 from "./Gauge_75.png"
 import gauge_100 from "./Gauge_100.png"
-import {Image} from "react-native";
+import {Image, View} from "react-native";
 import React from "react";
 
+type Point = { x: number; y: number };
+
 interface Prop {
+  faceId: number,
   attentionScore: number,
-  size: number,
+  faceBounds: {
+    size: {
+      width: number;
+      height: number;
+    };
+    origin: Point;
+  },
+  scale: number,
 }
 
 export default class ScoredIcon extends React.Component<Prop, {}> {
   render() {
-    const {attentionScore, size} = this.props;
+    const {faceId, attentionScore, faceBounds, scale} = this.props;
     let imageSource;
     if (attentionScore < 0.25) {
       imageSource = gauge_25
@@ -24,12 +34,24 @@ export default class ScoredIcon extends React.Component<Prop, {}> {
       imageSource = gauge_100
     }
     return (
-      <Image
-        source={imageSource}
+      <View
+        key={faceId.toString() + "-score"}
         style={{
-          width: size * 0.2,
-          height: size * 0.2,
-        }}/>
+          width: faceBounds.size.width * scale,
+          height: faceBounds.size.height * scale,
+          left: faceBounds.origin.x + faceBounds.size.width * (0.5 - 0.5 * scale),
+          top: faceBounds.origin.y - faceBounds.size.height * (0.1 + scale),
+          transform: [
+            {perspective: 600},
+          ]
+        }}>
+        <Image
+          source={imageSource}
+          style={{
+            width: faceBounds.size.width * scale,
+            height: faceBounds.size.width * scale,
+          }}/>
+      </View>
     );
   }
 }

@@ -3,7 +3,6 @@ import {FaceFeature} from 'expo-face-detector';
 import {StyleSheet, Text, View} from 'react-native';
 import {attentionScore} from "./Overlay";
 import ScoredIcon from "./ScoredIcon";
-import {faceSize} from "./Utils";
 
 const landmarkSize = 2;
 
@@ -15,31 +14,31 @@ export const scaledFace = (scale: number) => ({
   leftEyeOpenProbability,
   rightEyeOpenProbability,
 }: FaceFeature) => (
-  <View
-    key={faceID}
-    style={[
-      styles.face,
-      {
-        width: bounds.size.width * scale,
-        height: bounds.size.height * scale,
-        left: bounds.origin.x * scale,
-        top: bounds.origin.y * scale,
-        transform: [
-          { perspective: 600 },
-          { rotateZ: `${rollAngle!.toFixed(0)}deg` },
-          { rotateY: `${yawAngle!.toFixed(0)}deg` },
-        ],
-      },
-    ]}>
+  <View>
     <ScoredIcon
+      faceId={faceID}
       attentionScore={attentionScore(rollAngle, yawAngle, leftEyeOpenProbability, rightEyeOpenProbability)}
-      size={faceSize(bounds)}/>
-    <Text style={styles.faceText}>score {attentionScore(rollAngle, yawAngle, leftEyeOpenProbability, rightEyeOpenProbability)}</Text>
-    {/*<Text style={styles.faceText}>rollAngle: {rollAngle!.toFixed(0)}</Text>*/}
-    {/*<Text style={styles.faceText}>yawAngle: {yawAngle!.toFixed(0)}</Text>*/}
-    <Text style={styles.faceText}>scale: {scale!.toFixed(3)}</Text>
-    <Text style={styles.faceText}>l: {leftEyeOpenProbability!.toFixed(2)}</Text>
-    <Text style={styles.faceText}>r: {rightEyeOpenProbability!.toFixed(2)}</Text>
+      faceBounds={bounds}
+      scale={0.4}/>
+    <View
+      key={faceID}
+      style={[
+        styles.face,
+        {
+          width: bounds.size.width * scale,
+          height: bounds.size.height * scale,
+          left: bounds.origin.x * scale,
+          top: bounds.origin.y * scale,
+          transform: [
+            { perspective: 600 },
+            { rotateZ: `${rollAngle!.toFixed(0)}deg` },
+            { rotateY: `${yawAngle!.toFixed(0)}deg` },
+          ],
+        },
+      ]}>
+      {/*<Text style={styles.faceText}>score {attentionScore(rollAngle, yawAngle, leftEyeOpenProbability, rightEyeOpenProbability)}</Text>*/}
+      {/*<Text style={styles.faceText}>scale: {scale!.toFixed(3)}</Text>*/}
+    </View>
   </View>
 );
 
