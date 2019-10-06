@@ -4,6 +4,8 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import {attentionScore} from "./Overlay";
 import ScoredIcon from "./ScoredIcon";
 import bed_img from "./bed.png"
+import hand_img from "./hand.png"
+import food_img from "./food.png"
 
 const landmarkSize = 2;
 const iconScale = 0.2;
@@ -60,14 +62,20 @@ export const scaledFace = (scale: number, debug: boolean) => function({
 
 function smallIcons(faceID: any, bounds: any) {
   let icons = [];
+  if (true) {
+    icons.push(smallIcon(faceID, bounds, hand_img, icons.length));
+  }
   if (faceID % 2 === 0) {
     icons.push(smallIcon(faceID, bounds, bed_img, icons.length));
+  }
+  if (faceID * 7 % 11 * 23 % 2 === 0) {
+    icons.push(smallIcon(faceID, bounds, food_img, icons.length));
   }
   return icons;
 }
 function smallIcon(faceID: any, bounds: any, img_src: any, y: number) {
   return <View
-    key={faceID.toString() + "-bed-icon"}
+    key={faceID.toString() + '-' + y.toString()}
     style={{
       position: 'absolute',
       width: bounds.size.width * iconScale,
@@ -79,7 +87,7 @@ function smallIcon(faceID: any, bounds: any, img_src: any, y: number) {
       ]
     }}>
     <Image
-      source={bed_img}
+      source={img_src}
       style={{
         position: 'absolute',
         width: bounds.size.width * iconScale,
