@@ -6,9 +6,9 @@ import ScoredIcon from "./ScoredIcon";
 import bed_img from "./bed.png"
 import hand_img from "./hand.png"
 import food_img from "./food.png"
+import SmallIcon from "./SmallIcon";
 
 const landmarkSize = 2;
-const iconScale = 0.2;
 
 export const scaledFace = (scale: number, debug: boolean) => function({
   faceID,
@@ -25,7 +25,7 @@ export const scaledFace = (scale: number, debug: boolean) => function({
         faceId={faceID}
         attentionScore={attentionScore(rollAngle, yawAngle, leftEyeOpenProbability, rightEyeOpenProbability)}
         faceBounds={bounds}
-        scale={iconScale * 2}/>
+        scale={0.4}/>
       <View
         key={faceID.toString() + "-square"}
         style={[
@@ -54,7 +54,7 @@ export const scaledFace = (scale: number, debug: boolean) => function({
         faceId={faceID}
         attentionScore={attentionScore(rollAngle, yawAngle, leftEyeOpenProbability, rightEyeOpenProbability)}
         faceBounds={bounds}
-        scale={iconScale * 2}/>
+        scale={0.4}/>
       {smallIcons(faceID, bounds)}
     </View>;
   }
@@ -63,38 +63,15 @@ export const scaledFace = (scale: number, debug: boolean) => function({
 function smallIcons(faceID: any, bounds: any) {
   let icons = [];
   if (true) {
-    icons.push(smallIcon(faceID, bounds, hand_img, icons.length));
+    icons.push(<SmallIcon faceID={faceID} bounds={bounds} img_src={hand_img} scale={0.2} y={icons.length}/>);
   }
   if (faceID % 2 === 0) {
-    icons.push(smallIcon(faceID, bounds, bed_img, icons.length));
+    icons.push(<SmallIcon faceID={faceID} bounds={bounds} img_src={bed_img} scale={0.2} y={icons.length}/>);
   }
   if (faceID * 7 % 11 * 23 % 2 === 0) {
-    icons.push(smallIcon(faceID, bounds, food_img, icons.length));
+    icons.push(<SmallIcon faceID={faceID} bounds={bounds} img_src={food_img} scale={0.2} y={icons.length}/>);
   }
   return icons;
-}
-function smallIcon(faceID: any, bounds: any, img_src: any, y: number) {
-  return <View
-    key={faceID.toString() + '-' + y.toString()}
-    style={{
-      position: 'absolute',
-      width: bounds.size.width * iconScale,
-      height: bounds.size.height * iconScale,
-      left: bounds.origin.x + bounds.size.width * (0.5 - 0.5 * iconScale + 2 * (y + 1) * iconScale),
-      top: bounds.origin.y - bounds.size.height * (0.1 + iconScale),
-      transform: [
-        {perspective: 600},
-      ]
-    }}>
-    <Image
-      source={img_src}
-      style={{
-        position: 'absolute',
-        width: bounds.size.width * iconScale,
-        height: bounds.size.width * iconScale,
-      }}/>
-  </View>
-
 }
 
 export const scaledLandmarks = (scale: number) => (face: FaceFeature) => {
