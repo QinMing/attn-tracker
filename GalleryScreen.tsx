@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Text, ScrollView, TouchableOpacityProps } from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Text, ScrollView, TouchableOpacityProps, Image} from 'react-native';
 import * as Permissions from 'expo-permissions';
 import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
 import { MaterialIcons } from '@expo/vector-icons';
 import Photo from './Photo';
+import dash_0_1 from "./dash_0_1.png";
 
 const PHOTOS_DIR = FileSystem.documentDirectory + 'photos';
 
@@ -65,20 +66,28 @@ export default class GalleryScreen extends React.Component<TouchableOpacityProps
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.navbar}>
-          <TouchableOpacity style={styles.button} onPress={this.props.onPress}>
-            <MaterialIcons name="arrow-back" size={25} color="white" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={this.saveToGallery}>
-            <Text style={styles.whiteText}>Save selected to gallery</Text>
-          </TouchableOpacity>
-        </View>
-        <ScrollView contentContainerStyle={{ flex: 1 }}>
-          <View style={styles.pictures}>{this.state.photos.map(this.renderPhoto)}</View>
-        </ScrollView>
-      </View>
+      <TouchableOpacity style={{flex: 1}} onPress={this.props.onPress}>
+        <Image source={dash_0_1} style={{flex: 1, aspectRatio: 9/19}}/>
+      </TouchableOpacity>
     );
+    // return (
+    //   <View style={styles.container}>
+    //     <View style={styles.navbar}>
+    //       <TouchableOpacity style={styles.button} onPress={this.props.onPress}>
+    //         <MaterialIcons name="arrow-back" size={25} color="white" />
+    //       </TouchableOpacity>
+    //       <TouchableOpacity style={styles.button} onPress={this.saveToGallery}>
+    //         <Text style={styles.whiteText}>Save selected to gallery</Text>
+    //       </TouchableOpacity>
+    //     </View>
+    //     <ScrollView contentContainerStyle={{ flex: 1 }}>
+    //       <View style={styles.pictures}>
+    //         <Image source={food_img}/>
+    //       </View>
+    //       {/*<View style={styles.pictures}>{this.state.photos.map(this.renderPhoto)}</View>*/}
+    //     </ScrollView>
+    //   </View>
+    // );
   }
 }
 

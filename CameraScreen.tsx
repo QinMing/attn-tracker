@@ -124,7 +124,16 @@ export default class CameraScreen extends React.Component<{}, State> {
 
   getRatios = async () => this.camera!.getSupportedRatiosAsync();
 
-  toggleView = () => this.setState({ showGallery: !this.state.showGallery, newPhotos: false });
+  toggleView = () => {
+    if (this.state.showGallery) {
+      console.log("LANDSCAPE_LEFT")
+      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT);
+    } else {
+      console.log("PORTRAIT_DOWN")
+      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_DOWN);
+    }
+    this.setState({ showGallery: !this.state.showGallery, newPhotos: false });
+  }
 
   toggleMoreOptions = () => this.setState({ showMoreOptions: !this.state.showMoreOptions });
 
@@ -298,19 +307,28 @@ export default class CameraScreen extends React.Component<{}, State> {
             // styles.autoFocusLabel,
             {
               color: 'white',
-              fontSize: 15,
+              fontSize: 35,
             },
           ]}>
-          {this.state.handRaiseCnt}
+          Hands {this.state.handRaiseCnt}
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.toggleButton} onPress={this.toggleFocus}>
+      {/*<TouchableOpacity style={styles.toggleButton} onPress={this.toggleFocus}>*/}
+      {/*  <Text*/}
+      {/*    style={[*/}
+      {/*      styles.autoFocusLabel,*/}
+      {/*      { color: this.state.autoFocus === 'on' ? 'white' : '#6b6b6b' },*/}
+      {/*    ]}>*/}
+      {/*    D*/}
+      {/*  </Text>*/}
+      {/*</TouchableOpacity>*/}
+      <TouchableOpacity style={styles.toggleButton} onPress={this.toggleView}>
         <Text
           style={[
             styles.autoFocusLabel,
-            { color: this.state.autoFocus === 'on' ? 'white' : '#6b6b6b' },
+            { color: 'white' },
           ]}>
-          D
+          S
         </Text>
       </TouchableOpacity>
     </View>
