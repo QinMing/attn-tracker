@@ -37,6 +37,7 @@ export default class ScoredIcon extends React.Component<Prop, {}> {
       <View
         key={faceId.toString() + "-score-icon-image"}
         style={{
+          position: 'absolute',
           width: faceBounds.size.width * scale,
           height: faceBounds.size.height * scale,
           left: faceBounds.origin.x + faceBounds.size.width * (0.5 - 0.5 * scale),
@@ -48,6 +49,7 @@ export default class ScoredIcon extends React.Component<Prop, {}> {
         <Image
           source={imageSource}
           style={{
+            position: 'absolute',
             width: faceBounds.size.width * scale,
             height: faceBounds.size.width * scale,
           }}/>

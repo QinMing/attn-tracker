@@ -1,25 +1,17 @@
 import React from 'react';
-import { Alert, StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native';
+import {Alert, Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ScreenOrientation} from 'expo';
 import * as FaceDetector from 'expo-face-detector';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import {BarCodeScanner} from 'expo-barcode-scanner';
 import * as Permissions from 'expo-permissions';
 import * as FileSystem from 'expo-file-system';
-import { Camera } from 'expo-camera';
+import {Camera} from 'expo-camera';
 import Constants from 'expo-constants';
 import isIPhoneX from 'react-native-is-iphonex';
-import {
-  Ionicons,
-  MaterialIcons,
-  Foundation,
-  MaterialCommunityIcons,
-  Octicons,
-} from '@expo/vector-icons';
+import {Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons, Octicons,} from '@expo/vector-icons';
 
 import GalleryScreen from './GalleryScreen';
-import { face, landmarks } from './Face';
-
-import { scoredIcon } from './ScoreIcon';
-
+import {landmarks, scaledFace} from './Face';
 
 interface Picture {
   width: number;
@@ -109,6 +101,7 @@ export default class CameraScreen extends React.Component<{}, State> {
   camera?: Camera;
 
   async componentWillMount() {
+    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT);
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ permission: status, permissionsGranted: status === 'granted' });
   }
@@ -214,7 +207,7 @@ export default class CameraScreen extends React.Component<{}, State> {
 
   renderFaces = () => (
     <View style={styles.facesContainer} pointerEvents="none">
-      {this.state.faces.map(face)}
+      {this.state.faces.map(scaledFace(1, this.state.autoFocus === "off"))}
     </View>
   );
 
