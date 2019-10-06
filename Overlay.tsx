@@ -19,10 +19,3 @@ function distToCenter(angle: number) {
         return angle / 45.0;
     }
 }
-
-function adjustVariable(metric: number) {
-    if (metric > 0.5) {
-      metric -= 0.5;
-    }
-    return metric*2;
-}
