@@ -1,10 +1,12 @@
 import React from 'react';
 import {FaceFeature} from 'expo-face-detector';
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import {attentionScore} from "./Overlay";
 import ScoredIcon from "./ScoredIcon";
+import bed_img from "./bed.png"
 
 const landmarkSize = 2;
+const iconScale = 0.2;
 
 export const scaledFace = (scale: number, debug: boolean) => function({
   faceID,
@@ -21,7 +23,7 @@ export const scaledFace = (scale: number, debug: boolean) => function({
         faceId={faceID}
         attentionScore={attentionScore(rollAngle, yawAngle, leftEyeOpenProbability, rightEyeOpenProbability)}
         faceBounds={bounds}
-        scale={0.4}/>
+        scale={iconScale * 2}/>
       <View
         key={faceID.toString() + "-square"}
         style={[
@@ -50,9 +52,41 @@ export const scaledFace = (scale: number, debug: boolean) => function({
         faceId={faceID}
         attentionScore={attentionScore(rollAngle, yawAngle, leftEyeOpenProbability, rightEyeOpenProbability)}
         faceBounds={bounds}
-        scale={0.4}/>
+        scale={iconScale * 2}/>
+      {smallIcons(faceID, bounds)}
     </View>;
   }
+}
+
+function smallIcons(faceID: any, bounds: any) {
+  let icons = [];
+  if (faceID % 2 === 0) {
+    icons.push(smallIcon(faceID, bounds, bed_img, icons.length));
+  }
+  return icons;
+}
+function smallIcon(faceID: any, bounds: any, img_src: any, y: number) {
+  return <View
+    key={faceID.toString() + "-bed-icon"}
+    style={{
+      position: 'absolute',
+      width: bounds.size.width * iconScale,
+      height: bounds.size.height * iconScale,
+      left: bounds.origin.x + bounds.size.width * (0.5 - 0.5 * iconScale + 2 * (y + 1) * iconScale),
+      top: bounds.origin.y - bounds.size.height * (0.1 + iconScale),
+      transform: [
+        {perspective: 600},
+      ]
+    }}>
+    <Image
+      source={bed_img}
+      style={{
+        position: 'absolute',
+        width: bounds.size.width * iconScale,
+        height: bounds.size.width * iconScale,
+      }}/>
+  </View>
+
 }
 
 export const scaledLandmarks = (scale: number) => (face: FaceFeature) => {
@@ -86,7 +120,6 @@ export const scaledLandmarks = (scale: number) => (face: FaceFeature) => {
   );
 };
 
-export const face = scaledFace(1);
 export const landmarks = scaledLandmarks(1);
 
 const styles = StyleSheet.create({
