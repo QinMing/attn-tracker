@@ -6,16 +6,23 @@ export const attentionScore = (
     leftEyeOpenProbability: number,
     rightEyeOpenProbability: number) => (
 
-  0.25 * (1 - distToCenter(rollAngle))
+  0.15 * (1 - distToCenter(rollAngle))
   + 0.25 * (1 - distToCenter(yawAngle))
-  + 0.25 * leftEyeOpenProbability
-  + 0.25 * rightEyeOpenProbability
+  + 0.30 * leftEyeOpenProbability
+  + 0.30 * rightEyeOpenProbability
 );
 
 function distToCenter(angle: number) {
     if (angle > 180) {
         return (360.0 - angle) / 90.0;
     } else {
-        return angle / 90.0;
+        return angle / 45.0;
     }
+}
+
+function adjustVariable(metric: number) {
+    if (metric > 0.5) {
+      metric -= 0.5;
+    }
+    return metric*2;
 }

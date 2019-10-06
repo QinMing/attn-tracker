@@ -19,7 +19,6 @@ import GalleryScreen from './GalleryScreen';
 import { face, landmarks } from './Face';
 
 import { scoredIcon } from './ScoreIcon';
-import { View, Image, StyleSheet } from 'react-native';
 
 
 interface Picture {

@@ -29,6 +29,8 @@ export const scaledFace = (scale: number) => ({
         ],
       },
     ]}>
+
+
     <Text style={styles.faceText}>score {attentionScore(rollAngle, yawAngle, leftEyeOpenProbability, rightEyeOpenProbability)}</Text>
     {/*<Text style={styles.faceText}>rollAngle: {rollAngle!.toFixed(0)}</Text>*/}
     {/*<Text style={styles.faceText}>yawAngle: {yawAngle!.toFixed(0)}</Text>*/}
