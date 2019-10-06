@@ -6,15 +6,20 @@ import * as FileSystem from 'expo-file-system';
 import { MaterialIcons } from '@expo/vector-icons';
 import Photo from './Photo';
 import dash_0_1 from "./dash_0_1.png";
+import dash_1_0 from "./dash_1_0.png";
+import dash_1_1 from "./dash_1_1.png";
 
 const PHOTOS_DIR = FileSystem.documentDirectory + 'photos';
 
+interface Prop extends TouchableOpacityProps {
+  order: number;
+}
 interface State {
   photos: string[];
   selected: string[];
 }
 
-export default class GalleryScreen extends React.Component<TouchableOpacityProps, State> {
+export default class GalleryScreen extends React.Component<Prop, State> {
   readonly state: State = {
     photos: [],
     selected: [],
@@ -65,9 +70,17 @@ export default class GalleryScreen extends React.Component<TouchableOpacityProps
   )
 
   render() {
+    let imgSrc;
+    if (this.props.order === 1) {
+      imgSrc = dash_0_1;
+    } else if (this.props.order === 2) {
+      imgSrc = dash_1_0;
+    } else {
+      imgSrc = dash_1_1;
+    }
     return (
       <TouchableOpacity style={{flex: 1}} onPress={this.props.onPress}>
-        <Image source={dash_0_1} style={{flex: 1, aspectRatio: 9/19}}/>
+        <Image source={imgSrc} style={{flex: 1, aspectRatio: 9/19}}/>
       </TouchableOpacity>
     );
     // return (

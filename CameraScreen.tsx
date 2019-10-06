@@ -74,6 +74,7 @@ interface State {
   pictureSizes: any[];
   pictureSizeId: number;
   showGallery: boolean;
+  galleryOrder: number;
   showMoreOptions: boolean;
   handRaiseCnt: number;
 }
@@ -96,6 +97,7 @@ export default class CameraScreen extends React.Component<{}, State> {
     pictureSizes: [],
     pictureSizeId: 0,
     showGallery: false,
+    galleryOrder: 0,
     showMoreOptions: false,
     handRaiseCnt: 0,
   };
@@ -125,14 +127,19 @@ export default class CameraScreen extends React.Component<{}, State> {
   getRatios = async () => this.camera!.getSupportedRatiosAsync();
 
   toggleView = () => {
-    if (this.state.showGallery) {
-      console.log("LANDSCAPE_LEFT")
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT);
-    } else {
+    if (this.state.galleryOrder == 0) {
       console.log("PORTRAIT_DOWN")
       ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_DOWN);
+      this.setState({showGallery: true, galleryOrder:1, newPhotos: false});
+    } else if (this.state.galleryOrder == 1) {
+      this.setState({showGallery: true, galleryOrder: 2, newPhotos: false});
+    } else if (this.state.galleryOrder == 2) {
+      this.setState({showGallery: true, galleryOrder: 3, newPhotos: false});
+    } else {
+      console.log("LANDSCAPE_LEFT")
+      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT);
+      this.setState({showGallery: false, galleryOrder: 0, newPhotos: false});
     }
-    this.setState({ showGallery: !this.state.showGallery, newPhotos: false });
   }
 
   toggleMoreOptions = () => this.setState({ showMoreOptions: !this.state.showMoreOptions });
@@ -260,7 +267,7 @@ export default class CameraScreen extends React.Component<{}, State> {
   };
 
   renderGallery() {
-    return <GalleryScreen onPress={this.toggleView} />;
+    return <GalleryScreen onPress={this.toggleView} order={this.state.galleryOrder}/>;
   }
 
   renderFaces = () => (
