@@ -1,12 +1,9 @@
 import React from 'react';
 import {FaceFeature} from 'expo-face-detector';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {attentionScore} from "./Overlay";
 import ScoredIcon from "./ScoredIcon";
-import bed_img from "./bed.png"
-import hand_img from "./hand.png"
-import food_img from "./food.png"
-import SmallIcon from "./SmallIcon";
+import ScoredIcons from "./SmallIcons";
 
 const landmarkSize = 2;
 
@@ -55,23 +52,9 @@ export const scaledFace = (scale: number, debug: boolean) => function({
         attentionScore={attentionScore(rollAngle, yawAngle, leftEyeOpenProbability, rightEyeOpenProbability)}
         faceBounds={bounds}
         scale={0.4}/>
-      {smallIcons(faceID, bounds)}
+      <ScoredIcons faceID={faceID} bounds={bounds}/>
     </View>;
   }
-}
-
-function smallIcons(faceID: any, bounds: any) {
-  let icons = [];
-  if (true) {
-    icons.push(<SmallIcon faceID={faceID} bounds={bounds} img_src={hand_img} scale={0.2} y={icons.length}/>);
-  }
-  if (faceID % 2 === 0) {
-    icons.push(<SmallIcon faceID={faceID} bounds={bounds} img_src={bed_img} scale={0.2} y={icons.length}/>);
-  }
-  if (faceID * 7 % 11 * 23 % 2 === 0) {
-    icons.push(<SmallIcon faceID={faceID} bounds={bounds} img_src={food_img} scale={0.2} y={icons.length}/>);
-  }
-  return icons;
 }
 
 export const scaledLandmarks = (scale: number) => (face: FaceFeature) => {

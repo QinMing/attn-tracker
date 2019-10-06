@@ -116,6 +116,8 @@ export default class CameraScreen extends React.Component<{}, State> {
         console.log(e, 'Directory exists');
       });
     } catch (error) {}
+
+    setInterval(this.takePicture, 1000); // every second sends photo to Watson
   }
 
   getRatios = async () => this.camera!.getSupportedRatiosAsync();
@@ -146,7 +148,11 @@ export default class CameraScreen extends React.Component<{}, State> {
 
   takePicture = () => {
     if (this.camera) {
-      this.camera.takePictureAsync({ onPictureSaved: this.onPictureSaved });
+      this.camera.takePictureAsync({
+        onPictureSaved: this.onPictureSaved,
+        quality: 0.5,
+        base64: true
+      });
     }
   };
 
@@ -154,15 +160,38 @@ export default class CameraScreen extends React.Component<{}, State> {
   handleMountError = ({ message }: { message: string }) => console.error(message);
 
   onPictureSaved = async (photo: Picture) => {
-    if (Platform.OS === 'web') {
-      photos.push(photo);
-    } else {
-      await FileSystem.moveAsync({
-        from: photo.uri,
-        to: `${FileSystem.documentDirectory}photos/${Date.now()}.jpg`,
-      });
-    }
-    this.setState({ newPhotos: true });
+    const data = new FormData();
+    data.append("features", "objects");
+    data.append("collection_ids", "38b0b6a1-af53-47d4-890c-69d726de6d6e");
+    data.append("images_file", photo.uri);
+
+    fetch(
+      'https://apikey:gjgAfvwP7ykuNvgIqcKvHdCTrEzmKi0sh5MRxvY2hvjj@gateway.watsonplatform.net/visual-recognition/api/v4/analyze?version=2019-02-11',
+      {
+        method: 'POST',
+        // headers: {
+        //   Accept: 'application/json',
+        //   // 'Content-Type': 'multipart/form-data',
+        // },
+        body: data,
+      }
+    ).then(response => response.json())
+    .then(responseJson => {
+      console.log(1)
+      console.log(responseJson)
+    })
+    .catch(error => {
+      console.error(error);
+    });
+    // if (Platform.OS === 'web') {
+    //   photos.push(photo);
+    // } else {
+    //   await FileSystem.moveAsync({
+    //     from: photo.uri,
+    //     to: `${FileSystem.documentDirectory}photos/${Date.now()}.jpg`,
+    //   });
+    // }
+    // this.setState({ newPhotos: true });
   };
 
   onBarCodeScanned = (code: { type: string; data: string }) => {
