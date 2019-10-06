@@ -14,16 +14,16 @@ export const scaledFace = (scale: number) => ({
   leftEyeOpenProbability,
   rightEyeOpenProbability,
 }: FaceFeature) => (
-  <View>
+  <View key={faceID}>
     <ScoredIcon
+      key={faceID.toString() + "-score-icon"}
       faceId={faceID}
       attentionScore={attentionScore(rollAngle, yawAngle, leftEyeOpenProbability, rightEyeOpenProbability)}
       faceBounds={bounds}
       scale={0.4}/>
     <View
-      key={faceID}
+      key={faceID.toString() + "-square"}
       style={[
-        styles.face,
         {
           width: bounds.size.width * scale,
           height: bounds.size.height * scale,

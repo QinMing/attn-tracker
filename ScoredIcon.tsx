@@ -35,7 +35,7 @@ export default class ScoredIcon extends React.Component<Prop, {}> {
     }
     return (
       <View
-        key={faceId.toString() + "-score"}
+        key={faceId.toString() + "-score-icon-image"}
         style={{
           width: faceBounds.size.width * scale,
           height: faceBounds.size.height * scale,
