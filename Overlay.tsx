@@ -19,3 +19,4 @@ function distToCenter(angle: number) {
         return angle / 90.0;
     }
 }
+

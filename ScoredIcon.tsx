@@ -7,12 +7,12 @@ import React from "react";
 
 interface Prop {
   attentionScore: number,
-  scale: number,
+  size: number,
 }
 
 export default class ScoredIcon extends React.Component<Prop, {}> {
   render() {
-    const {attentionScore, scale} = this.props;
+    const {attentionScore, size} = this.props;
     let imageSource;
     if (attentionScore < 0.25) {
       imageSource = gauge_25
@@ -24,7 +24,12 @@ export default class ScoredIcon extends React.Component<Prop, {}> {
       imageSource = gauge_100
     }
     return (
-      <Image source={imageSource} style={{width: 200 * scale, height: 200 * scale}}/>
+      <Image
+        source={imageSource}
+        style={{
+          width: size * 0.2,
+          height: size * 0.2,
+        }}/>
     );
   }
 }
