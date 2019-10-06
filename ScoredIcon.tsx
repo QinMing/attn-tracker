@@ -4,6 +4,8 @@ import gauge_75 from "./Gauge_75.png"
 import gauge_100 from "./Gauge_100.png"
 import {Image, View} from "react-native";
 import React from "react";
+//import bodyframe from "./Body_Frame.png";
+import faceframe from "./FaceFrame.png";
 
 type Point = { x: number; y: number };
 
@@ -51,8 +53,16 @@ export default class ScoredIcon extends React.Component<Prop, {}> {
           style={{
             position: 'absolute',
             width: faceBounds.size.width * scale,
-            height: faceBounds.size.width * scale,
+            height: faceBounds.size.height * scale,
           }}/>
+          <Image
+            source={faceframe}
+            style={{
+              position: 'absolute',
+              width: faceBounds.size.width * scale,
+              height: faceBounds.size.height * scale,
+              top: faceBounds.origin.y + faceBounds.size.height * (0.5-0.5*scale),
+            }}/>
       </View>
     );
   }
