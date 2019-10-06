@@ -292,6 +292,18 @@ export default class CameraScreen extends React.Component<{}, State> {
       {/*<TouchableOpacity style={styles.toggleButton} onPress={this.toggleWB}>*/}
       {/*  <MaterialIcons name={wbIcons[this.state.whiteBalance]} size={32} color="white" />*/}
       {/*</TouchableOpacity>*/}
+      <TouchableOpacity style={styles.toggleButton}>
+        <Text
+          style={[
+            // styles.autoFocusLabel,
+            {
+              color: 'white',
+              fontSize: 15,
+            },
+          ]}>
+          {this.state.handRaiseCnt}
+        </Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.toggleButton} onPress={this.toggleFocus}>
         <Text
           style={[
@@ -299,15 +311,6 @@ export default class CameraScreen extends React.Component<{}, State> {
             { color: this.state.autoFocus === 'on' ? 'white' : '#6b6b6b' },
           ]}>
           D
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.toggleButton}>
-        <Text
-          style={[
-            styles.autoFocusLabel,
-            {color: 'white'},
-          ]}>
-          {this.state.handRaiseCnt.toString()}
         </Text>
       </TouchableOpacity>
     </View>
