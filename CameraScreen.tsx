@@ -75,6 +75,7 @@ interface State {
   pictureSizeId: number;
   showGallery: boolean;
   showMoreOptions: boolean;
+  handRaiseCnt: number;
 }
 
 export default class CameraScreen extends React.Component<{}, State> {
@@ -82,7 +83,7 @@ export default class CameraScreen extends React.Component<{}, State> {
     flash: 'off',
     zoom: 0,
     autoFocus: 'on',
-    type: 'back',
+    type: 'front',
     depth: 0,
     whiteBalance: 'auto',
     ratio: '16:9',
@@ -96,6 +97,7 @@ export default class CameraScreen extends React.Component<{}, State> {
     pictureSizeId: 0,
     showGallery: false,
     showMoreOptions: false,
+    handRaiseCnt: 0,
   };
 
   camera?: Camera;
@@ -117,7 +119,7 @@ export default class CameraScreen extends React.Component<{}, State> {
     //   });
     // } catch (error) {}
     console.log("periodic job registered")
-    setInterval(this.takePicture, 1000); // every second sends photo to Watson
+    setInterval(this.takePicture, 800); // every second sends photo to Watson
   }
 
   getRatios = async () => this.camera!.getSupportedRatiosAsync();
@@ -181,10 +183,21 @@ export default class CameraScreen extends React.Component<{}, State> {
       body: data,
     }).then(response => {
       // console.log(response.text());
-      return response.text()
+      return response.json()
     })
     .then(responseJson => {
-      console.log(responseJson);
+      // console.log(responseJson);
+      // console.log(responseJson.images);
+      // console.log(responseJson.images[0]);
+      // console.log(responseJson.images[0].objects);
+      let hasHandRaise: boolean;
+      if (responseJson.images[0].objects.collections) {
+        let handRaiseCnt = this.state.handRaiseCnt + 1;
+        this.setState({handRaiseCnt});
+        console.log(this.state.handRaiseCnt)
+      } else {
+        console.log(this.state.handRaiseCnt)
+      }
     })
     .catch(error => {
       console.log("Got error");
@@ -273,19 +286,28 @@ export default class CameraScreen extends React.Component<{}, State> {
       <TouchableOpacity style={styles.toggleButton} onPress={this.toggleFacing}>
         <Ionicons name="ios-reverse-camera" size={32} color="white" />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.toggleButton} onPress={this.toggleFlash}>
-        <MaterialIcons name={flashIcons[this.state.flash]} size={32} color="white" />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.toggleButton} onPress={this.toggleWB}>
-        <MaterialIcons name={wbIcons[this.state.whiteBalance]} size={32} color="white" />
-      </TouchableOpacity>
+      {/*<TouchableOpacity style={styles.toggleButton} onPress={this.toggleFlash}>*/}
+      {/*  <MaterialIcons name={flashIcons[this.state.flash]} size={32} color="white" />*/}
+      {/*</TouchableOpacity>*/}
+      {/*<TouchableOpacity style={styles.toggleButton} onPress={this.toggleWB}>*/}
+      {/*  <MaterialIcons name={wbIcons[this.state.whiteBalance]} size={32} color="white" />*/}
+      {/*</TouchableOpacity>*/}
       <TouchableOpacity style={styles.toggleButton} onPress={this.toggleFocus}>
         <Text
           style={[
             styles.autoFocusLabel,
             { color: this.state.autoFocus === 'on' ? 'white' : '#6b6b6b' },
           ]}>
-          AF
+          D
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.toggleButton}>
+        <Text
+          style={[
+            styles.autoFocusLabel,
+            {color: 'white'},
+          ]}>
+          {this.state.handRaiseCnt.toString()}
         </Text>
       </TouchableOpacity>
     </View>
