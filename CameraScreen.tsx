@@ -314,10 +314,20 @@ export default class CameraScreen extends React.Component<{}, State> {
             // styles.autoFocusLabel,
             {
               color: 'white',
+              fontSize: 18,
+            },
+          ]}>
+          Hands up
+        </Text>
+        <Text
+          style={[
+            // styles.autoFocusLabel,
+            {
+              color: 'white',
               fontSize: 35,
             },
           ]}>
-          Hands {this.state.handRaiseCnt}
+          {this.state.handRaiseCnt}
         </Text>
       </TouchableOpacity>
       {/*<TouchableOpacity style={styles.toggleButton} onPress={this.toggleFocus}>*/}
