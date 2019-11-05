@@ -3,7 +3,7 @@ import {Alert, Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-n
 import {ScreenOrientation} from 'expo';
 import * as FaceDetector from 'expo-face-detector';
 import {BarCodeScanner} from 'expo-barcode-scanner';
-// import * as Permissions from 'expo-permissions';
+import * as Permissions from 'expo-permissions';
 import * as FileSystem from 'expo-file-system';
 import {Camera} from 'expo-camera';
 // import { Permissions } from 'expo';
