@@ -14,6 +14,15 @@ We collect video and pictures from the phone camera, detect certain facials feat
 
 We believe technology can be more attentive to what's happening in the classroom and provide background context to each and every student. We are Attentive AI, and we are on a mission to help teachers, classrooms, and schools bring data-driven learning awareness anywhere in the world with a smartphone and 5G.
 
+### How to Install and Run
+
+0. Install [Expo](https://docs.expo.io/versions/v35.0.0/get-started/installation/)
+1. Clone Repo
+2. Run `yarn install`
+3. Run `expo start`
+
+NOTE: Developed primarily on Android but tested and works on both iOS and Android. Due to camera intergration, it won't work in the emulator and you'll need to run on an actual device to actually test it. 
+
 ### Inspiration:
 
 Many are working to understand how IoT will revolutionize design and manufacturing. When brainstorming for this hackathon we sought out innovation by borrowing from those industries and applying them to a problem that we were passionate about, Education. We set out to provide the benefits of IoT data, cleansed through the lens of AI, to provide teachers with the realtime, relevant, and contextual information needed to serve their students. By further discussing with teachers, we learned more about their teaching challenges and refined our approach in order to incorporate key metrics (like attention) and to provide actionable contextual information about the students (academic history, sleep, socioeconomics, etc). And we focused on designing a seamless, in-situation user interface. .
