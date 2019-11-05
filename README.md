@@ -6,6 +6,8 @@
 
 [![Attention Tracker by Attentive AI](https://img.youtube.com/vi/1oO4VQVYbxI/0.jpg)](https://www.youtube.com/watch?v=1oO4VQVYbxI)
 
+[Watch a Video Demo of App](https://www.youtube.com/watch?v=1oO4VQVYbxI)
+
 Our app empowers teachers, classrooms, and educators. We detect how attentive students are real-time in the classroom and throughout the day. We provide a seamless user experience showing if a student is paying attention, how often students engage (like raising their hands), and display other actionable background information about individual students (hunger, happiness, sleep, stress, etc).
 
 We collect video and pictures from the phone camera, detect certain facials feature on the device, and use AI/ML for advanced behavior detection.

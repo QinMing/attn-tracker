@@ -3,9 +3,10 @@ import {Alert, Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-n
 import {ScreenOrientation} from 'expo';
 import * as FaceDetector from 'expo-face-detector';
 import {BarCodeScanner} from 'expo-barcode-scanner';
-import * as Permissions from 'expo-permissions';
+// import * as Permissions from 'expo-permissions';
 import * as FileSystem from 'expo-file-system';
 import {Camera} from 'expo-camera';
+// import { Permissions } from 'expo';
 import Constants from 'expo-constants';
 import isIPhoneX from 'react-native-is-iphonex';
 import {Foundation, Ionicons, MaterialCommunityIcons, MaterialIcons, Octicons,} from '@expo/vector-icons';
@@ -185,7 +186,7 @@ export default class CameraScreen extends React.Component<{}, State> {
       uri: photo.uri,
       type: 'image/jpg'
     });
-    console.log("taking picture ..");
+    console.log("taking picture...");
 
     fetch(
       'https://gateway.watsonplatform.net/visual-recognition/api/v4/analyze?version=2019-02-11',{
